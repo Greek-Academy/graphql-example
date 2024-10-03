@@ -1,0 +1,51 @@
+services:
+  # GraphQLアプリ
+  app:
+    build:
+      context: ./app
+    command: npm start
+
+    # docker compose up --watch で実行時のみ有効
+    # https://qiita.com/wataru86/items/132b1a235af5512524d3
+    develop:
+      watch:
+        # npm run buildでcomposeをリスタート
+        - action: sync+restart
+          path: ./app/build
+          target: /app/build
+        
+        # package.jsonが変更されたらDockerFileをリビルド
+        - action: rebuild
+          path: ./app/package.json
+    env_file: ".env"
+    container_name: "graphql-app"
+    depends_on:
+      - mysql
+    ports:
+      - "4000:4000"
+  
+  # GraphQLクライアント
+  ruru:
+    image: node:20-slim
+    command: npx ruru -SP -p 4001 -e http://app:4000/graphql
+    ports:
+      - "4001:4001"
+    depends_on:
+      - app
+      
+  mysql:
+    image: mysql:9
+    env_file: ".env"
+    volumes:
+      - db-data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    depends_on:
+      - mysql
+    env_file: ".env"
+    ports:
+      - "8090:80"
+volumes:
+  db-data:
+    driver: local

@@ -1,12 +1,17 @@
-# GraphQL Example
+# GraphQL Playground
 
 ## Usage:
 
 ```
-npm i
-npx ts-node src/server.ts
-
-then
-
-npx ruru -SP -p 4001 -e http://localhost:4000/graphql
+docker compose up --watch
 ```
+
+
+## Rebuild the code
+
+Docker container will be restarted when node.js is rebuilt.
+```
+cd app/
+npm run build/
+```
+

@@ -12,10 +12,15 @@ import {
   ImageType,
 } from './images';
 
+
 export const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
     fields: {
+      hello: {
+        type: GraphQLString,
+        resolve: () => { return "Hello World!!"; },
+      },
       image: {
         type: ImageType,
         args: {
