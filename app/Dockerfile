@@ -17,7 +17,6 @@ FROM base AS build
 
 # Install dependencies using pnpm fetch and frozen-lockfile
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-    pnpm install && \
     pnpm fetch --frozen-lockfile && \
     pnpm install --frozen-lockfile
 

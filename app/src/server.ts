@@ -1,11 +1,45 @@
 import express from 'express';
 import { createHandler } from 'graphql-http/lib/use/express';
-import { schema } from './schema';
+import { createSchema, } from './schema';
+import knex, { Knex } from 'knex';
 
-// Create an express instance serving all methods on `/graphql`
-// where the GraphQL over HTTP express request handler is
-const app = express();
-app.post('/graphql', createHandler({ schema }));
+class MyApp {
 
-app.listen({ port: 4000 });
-console.log('Listening to port 4000');
+  private server: express.Express;
+  private constructor(conn: Knex) {
+
+    this.server = express();
+
+    const schema = createSchema(conn);
+    this.server.post('/graphql', createHandler({ schema }));
+  }
+
+  start() {
+    this.server.listen({ port: 4000 }, () => {
+      console.log('Listening to port 4000');
+    });
+  }
+
+  static readonly create = async () => {
+    // MySQLに接続
+    const conn = knex({
+      client: 'mysql2',
+      connection: {
+        host: 'mysql',
+        user: process.env.MYSQL_USER,
+        password: process.env.MYSQL_PASSWORD,
+        database: process.env.MYSQL_DATABASE,
+      }
+    });
+
+    // インスタンスを作成
+    const app = new MyApp(conn);
+    return app;
+  };
+}
+
+// アプリケーションを開始
+(async () => {
+  const myApp = await MyApp.create();
+  myApp.start();
+})();

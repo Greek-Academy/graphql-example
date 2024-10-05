@@ -6,6 +6,9 @@
 docker compose up --watch
 ```
 
+then, access to http://localhost:4001
+
+
 
 ## Rebuild the code
 
