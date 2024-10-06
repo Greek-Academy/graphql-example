@@ -1,17 +1,21 @@
 import express from 'express';
 import { createHandler } from 'graphql-http/lib/use/express';
-import { createSchema, } from './schema';
+import { schema, } from './schema/index';
 import knex, { Knex } from 'knex';
 
 class MyApp {
 
   private server: express.Express;
-  private constructor(conn: Knex) {
+  private constructor(db: Knex) {
 
     this.server = express();
 
-    const schema = createSchema(conn);
-    this.server.post('/graphql', createHandler({ schema }));
+    this.server.post('/graphql', createHandler({
+      schema,
+      context: {
+        db,
+      }
+    }));
   }
 
   start() {

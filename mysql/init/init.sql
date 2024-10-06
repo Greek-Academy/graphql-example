@@ -49,10 +49,10 @@ INSERT INTO `category` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `images`
+-- Table structure for table `image`
 --
 
-CREATE TABLE `images` (
+CREATE TABLE `image` (
   `id` int NOT NULL,
   `user_id` int DEFAULT NULL,
   `category_id` int DEFAULT NULL,
@@ -61,10 +61,10 @@ CREATE TABLE `images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `images`
+-- Dumping data for table `image`
 --
 
-INSERT INTO `images` (`id`, `user_id`, `category_id`, `title`, `url`) VALUES
+INSERT INTO `image` (`id`, `user_id`, `category_id`, `title`, `url`) VALUES
 (1, 572949, 1, 'Stacked Brwonies', 'https://images.pexels.com/photos/3026804/pexels-photo-3026804.jpeg'),
 (2, 324989, 2, 'Shallow focus photography of Cafe Latte', 'https://images.pexels.com/photos/982612/pexels-photo-982612.jpeg'),
 (3, 222549, 1, 'Sliced Cake on White Saucer', 'https://images.pexels.com/photos/2144112/pexels-photo-2144112.jpeg'),
@@ -117,9 +117,9 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `images`
+-- Indexes for table `image`
 --
-ALTER TABLE `images`
+ALTER TABLE `image`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `category_id` (`category_id`);
@@ -141,9 +141,9 @@ ALTER TABLE `category`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `images`
+-- AUTO_INCREMENT for table `image`
 --
-ALTER TABLE `images`
+ALTER TABLE `image`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
@@ -157,11 +157,11 @@ ALTER TABLE `user`
 --
 
 --
--- Constraints for table `images`
+-- Constraints for table `image`
 --
-ALTER TABLE `images`
-  ADD CONSTRAINT `images_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `images_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+ALTER TABLE `image`
+  ADD CONSTRAINT `image_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `image_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

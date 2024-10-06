@@ -10,11 +10,3 @@ export const UserType = new GraphQLObjectType({
   }),
 });
 
-
-// export const getOwnerById = (ownerId: number) => {
-//   return ownerMap.get(ownerId);
-// };
-
-// export const getOwners = () => {
-//   return owners;
-// };
